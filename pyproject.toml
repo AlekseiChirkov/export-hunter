@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "export-hunter"
+version = "0.1.0"
+description = ""
+authors = ["Scareface <tektonikboy98@gmail.com>"]
+readme = "README.md"
+packages = [{include = "export_hunter"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+comtradeapicall = "^1.0.20"
+pandas = "^2.0.2"
+eurostat = "^1.0.4"
+requests = "^2.31.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
