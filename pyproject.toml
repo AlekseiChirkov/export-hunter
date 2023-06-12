@@ -8,10 +8,9 @@ packages = [{include = "export_hunter"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-comtradeapicall = "^1.0.20"
 pandas = "^2.0.2"
+comtradeapicall = "^1.0.20"
 eurostat = "^1.0.4"
-requests = "^2.31.0"
 
 
 [build-system]
