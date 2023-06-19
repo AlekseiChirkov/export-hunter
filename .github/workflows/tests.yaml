@@ -1,0 +1,47 @@
+name: Tests and Linter Checks
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      DB_HOST: 'localhost'
+      DB_NAME: 'github-actions'
+    services:
+      postgres:
+        image: postgres:13.5
+        env:
+          POSTGRES_DB: github-actions
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.11
+
+      - name: Install Poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: Install dependencies
+        run: poetry install --no-root
+
+      - name: Run tests
+        working-directory: src
+        run: poetry run python manage.py test
+
+      - name: Run linter checks
+        run: poetry run flake8
