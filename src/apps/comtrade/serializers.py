@@ -17,4 +17,3 @@ class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Country
         fields = ("id", "name", "iso_alpha3_code")
-

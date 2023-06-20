@@ -105,4 +105,3 @@ class CountryListViewTest(APITestCase):
         response_data = response.data.get("results")
 
         self.assertEqual(len(response_data), 3)
-
