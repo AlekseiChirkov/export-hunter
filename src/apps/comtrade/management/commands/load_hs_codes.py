@@ -46,7 +46,6 @@ class Command(BaseCommand):
                     hs_codes["results"]
                 )
 
-                # Insert remaining items
                 if hs_code_objects:
                     HSCode.objects.bulk_create(list(hs_code_objects))
 
@@ -60,4 +59,5 @@ class Command(BaseCommand):
             self.stderr.write(self.style.ERROR(f"Error decoding JSON: {e}"))
         except Exception as e:
             self.stderr.write(
-                self.style.ERROR(f"An unexpected error occurred: {e}"))
+                self.style.ERROR(f"An unexpected error occurred: {e}")
+            )

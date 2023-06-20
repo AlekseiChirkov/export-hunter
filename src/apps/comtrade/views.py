@@ -1,18 +1,15 @@
-import requests
 from django.db.models import QuerySet, Q
 
-from rest_framework import generics, status
-from rest_framework.request import Request
-from rest_framework.response import Response
+from rest_framework import generics
 
-from apps.comtrade.models import HSCode
-from apps.comtrade.serializers import HSCodeSerializer
+from apps.comtrade import models
+from apps.comtrade import serializers
 
 
 class HSCodeListView(generics.ListAPIView):
     """Class to get list of HS codes"""
 
-    serializer_class = HSCodeSerializer
+    serializer_class = serializers.HSCodeSerializer
 
     def get_queryset(self) -> QuerySet:
         """
@@ -21,10 +18,34 @@ class HSCodeListView(generics.ListAPIView):
         @rtype: QuerySet
         """
 
-        queryset = HSCode.objects.all().order_by("id")
+        queryset = models.HSCode.objects.all().order_by("id")
         query = self.request.query_params.get("query", None)
 
         if query:
             queryset = queryset.filter(Q(id__icontains=query))
+
+        return queryset
+
+
+class CountryListView(generics.ListAPIView):
+    """Class to get list of Countries"""
+
+    serializer_class = serializers.CountrySerializer
+
+    def get_queryset(self) -> QuerySet:
+        """
+        Method returns filtered countries data for autocomplete on
+        frontend input field
+        @return: django.db.models.Queryset
+        @rtype: QuerySet
+        """
+
+        queryset = models.Country.objects.all().order_by("name")
+        query = self.request.query_params.get("query", None)
+
+        if query:
+            queryset = queryset.filter(
+                Q(name__icontains=query) | Q(iso_alpha3_code__icontains=query)
+            )
 
         return queryset
