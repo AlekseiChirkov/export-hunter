@@ -129,4 +129,3 @@ class UserChangePasswordView(generics.UpdateAPIView):
             "detail": "Password changed successfully.",
         }
         return Response(data=response_data, status=status.HTTP_200_OK)
-

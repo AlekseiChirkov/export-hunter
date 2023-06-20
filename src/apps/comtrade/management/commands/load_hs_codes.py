@@ -42,13 +42,17 @@ class Command(BaseCommand):
             hs_codes = response.json()
 
             with transaction.atomic():
-                hs_code_objects = self.create_hs_code_objects(hs_codes["results"])
+                hs_code_objects = self.create_hs_code_objects(
+                    hs_codes["results"]
+                )
 
                 # Insert remaining items
                 if hs_code_objects:
                     HSCode.objects.bulk_create(list(hs_code_objects))
 
-            self.stdout.write(self.style.SUCCESS("HS codes loaded successfully"))
+            self.stdout.write(
+                self.style.SUCCESS("HS codes loaded successfully")
+            )
 
         except requests.RequestException as e:
             self.stderr.write(self.style.ERROR(f"Network error: {e}"))
@@ -57,4 +61,3 @@ class Command(BaseCommand):
         except Exception as e:
             self.stderr.write(
                 self.style.ERROR(f"An unexpected error occurred: {e}"))
-

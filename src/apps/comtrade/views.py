@@ -21,7 +21,7 @@ class HSCodeListView(generics.ListAPIView):
         @rtype: QuerySet
         """
 
-        queryset = HSCode.objects.all()
+        queryset = HSCode.objects.all().order_by("id")
         query = self.request.query_params.get("query", None)
 
         if query:
