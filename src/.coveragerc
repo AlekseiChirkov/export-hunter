@@ -1,0 +1,9 @@
+[run]
+omit =
+    */src/manage.py
+    */__init__.py
+    */migrations/*
+    */src/config/settings.py
+    */urls.py
+    */routers.py
+    */tests/*
